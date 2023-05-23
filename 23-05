@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#define ESC 27
+void mostrarCompleto(int legajo[],char nombres[][30],int anos[],int validos);
+int cargarCompleto(int DIM,int legajo[DIM],char nombres[DIM][30],int anos[DIM]);
+int buscarPosLegajo(int legajo[],int validos,int dato);
+void buscaPorLegajo(int legajo[],char nombres[][30],int anos[],int validos,int dato);
+void mostrarSeparado(int legajo[],char nombres[][30],int anos[],int validos);
+
+int main()
+{
+    int DIM=20;
+    int legajo[DIM];
+    char nombres[DIM][30];
+    int anos[DIM];
+    int validos=0,dato=0,posicion=0,dato1=0;
+
+    printf("\n\n***Carga legajo, nombre y anos***\n");
+    validos=cargarCompleto(DIM,legajo,nombres,anos);
+    printf("\n\n***Mostrar legajo, nombre y anos***\n");
+    mostrarCompleto(legajo,nombres,anos,validos);
+    printf("\n\n***Buscar posicion por legajo***\n");
+    printf("\n Que legajo desea buscar? .");
+    scanf("%d",&dato);
+    posicion=buscarPosLegajo(legajo,validos,dato);
+    printf("\nEl legajo se encuentra en la posicion: %d",posicion);
+    printf("\n\n***Buscar Por Legajo***\n");
+    printf("\n Que legajo desea buscar? .");
+    scanf("%d",&dato1);
+    buscaPorLegajo(legajo,nombres,anos,validos,dato1);
+    printf("\n\n***Mostrar Separado***\n");
+    mostrarSeparado(legajo,nombres,anos, validos);
+
+
+    return 0;
+}
+
+int cargarCompleto(int DIM,int legajo[DIM],char nombres[DIM][30],int anos[DIM]){
+    int i=0;
+    char salir;
+
+    while(i<DIM && salir!=ESC){
+        printf("\nIngrese numero de Legajo: ");
+        scanf("%d",&legajo[i]);
+        fflush(stdin);
+        printf("\nIngrese el nombre: ");
+        gets(&nombres[i]);
+        fflush(stdin);
+        printf("\nIngrese el año: ");
+        scanf("%d",&anos[i]);
+        fflush(stdin);
+        i++;
+        printf("\n\nDesea seguir cargando? Esc para salir\n\n");
+        salir=getch();
+    }
+    return i;
+}
+
+void mostrarCompleto(int legajo[],char nombres[][30],int anos[],int validos){
+    int i=0;
+    for(i;i<validos;i++){
+        printf("\n %d | Legajo: %d | Nombres: %s | Anos: %d ",i,legajo[i],nombres[i],anos[i]);
+    }
+}
+
+int buscarPosLegajo(int legajo[],int validos,int dato){
+    int i=0;
+    while(i<validos && dato!=legajo[i]){
+            i++;
+    }
+    return i;
+}
+
+void buscaPorLegajo(int legajo[],char nombres[][30],int anos[],int validos,int dato){
+    int i=0;
+    i=buscarPosLegajo(legajo,validos,dato);
+    printf("\n**Legajo buscado**\n %d |Legajo: %d |Nombres: %s |Anos: %d ",i,legajo[i],nombres[i],anos[i]);
+}
+
+void mostrarSeparado(int legajo[],char nombres[][30],int anos[],int validos){
+    char salir;
+    int i=0;
+    while(salir!=ESC && i<validos){
+        printf("\n %d | Legajo: %d | Nombres: %s | Anos: %d ",i,legajo[i],nombres[i],anos[i]);
+        printf("\nDesea ver mas Alumnos? Esc para salir");
+        salir=getch();
+        i++;
+    }
+}
+
+
